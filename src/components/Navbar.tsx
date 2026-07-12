@@ -6,10 +6,11 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import { navlinks } from "@/data/navlinks";
 import { INavLink } from "@/dataTypes";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-
+    const router = useRouter()
     return (
         <>
             <motion.nav className="fixed top-0 z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-32 backdrop-blur"
@@ -18,7 +19,7 @@ export default function Navbar() {
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 250, damping: 70, mass: 1 }}
             >
-                <a href="https://prebuiltui.com?utm_source=pixels">
+                <a href="/">
                     <Image className="h-8.5 w-auto" src="/assets/logo.svg" alt="logo" width={130} height={34} priority />
                 </a>
 
@@ -30,8 +31,10 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                <button className="hidden md:block px-6 py-2.5 bg-pink-600 hover:bg-pink-700 active:scale-95 transition-all rounded-full">
-                    Start free trial
+                <button 
+                onClick={() => router.push("/sign-in")}
+                className="hidden md:block px-6 py-2.5 bg-pink-600 hover:bg-pink-700 active:scale-95 transition-all rounded-full">
+                    Get Started
                 </button>
                 <button onClick={() => setIsOpen(true)} className="md:hidden">
                     <MenuIcon size={26} className="active:scale-90 transition" />
@@ -44,8 +47,8 @@ export default function Navbar() {
                         {link.name}
                     </Link>
                 ))}
-                <button onClick={() => setIsOpen(false)} className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-pink-600 hover:bg-pink-700 transition text-white rounded-md flex">
-                    <XIcon />
+                <button onClick={() => setIsOpen(false)} className="active:ring-3 active:ring-white  px-4 py-2 items-center justify-center bg-pink-600 hover:bg-pink-700 transition text-white rounded-md flex">
+                    <XIcon size={15} />
                 </button>
             </div>
         </>

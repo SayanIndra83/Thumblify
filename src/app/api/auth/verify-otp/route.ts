@@ -12,7 +12,7 @@ export async function POST(req:NextRequest) {
         if(!user) return NextResponse.json({message: "User not found", success: false}, {status: 404})
         const storedOtp = await redis.get(`user_otp:${email}`);
         if(!storedOtp) return NextResponse.json({message: "OTP is expired, please request a new one", success: false}, {status: 400})
-        
+        console.log(storedOtp)
         if(storedOtp.toString() !== otp) return NextResponse.json({message: "Invalid Otp", success: false}, {status: 400})
 
         await redis.del(`user_otp:${email}`)
