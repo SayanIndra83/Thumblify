@@ -3,8 +3,8 @@ import mongoose, { Model } from "mongoose"
 export interface IUser{
     userName: string;
     email: string;
-    password?: string;
-    userImage?:string;
+    password: string | null;
+    userImage:string | null;
     isVerified: boolean
 }
 
@@ -22,10 +22,12 @@ const UserSchema = new mongoose.Schema<IUser>({
 password:{
     type: String,
     required: false,
+    default: null
 },
 userImage:{
     type: String,
-    required: false
+    required: false,
+    default: null
 },
 isVerified:{
     type: Boolean,
