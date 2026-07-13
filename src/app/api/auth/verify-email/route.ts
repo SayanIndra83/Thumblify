@@ -22,7 +22,7 @@ export async function POST(req:NextRequest) {
          const username = user?.userName || "there"
         const subject = "Password Reset Verification Code";
     
-const html = `
+      const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 12px; background-color: #ffffff;">
         <h2 style="color: #f0146b; text-align: center; margin-bottom: 24px;">Reset Your Password</h2>
         
