@@ -1,14 +1,18 @@
+import { passwordSchema } from "@/app/schema/password.schema"
 import { ApiResponse } from "@/app/types/ApiResponse"
 import axios, { AxiosError } from "axios"
-import { Key, Loader2 } from "lucide-react"
+import { EyeClosed, EyeIcon, Key, Loader2, Lock } from "lucide-react"
 import { motion } from "motion/react"
 import { useRouter } from "next/navigation"
 import React, { useRef, useState } from "react"
 import toast from "react-hot-toast"
 
-function VerifyOtp({email} : {email:string}) {
+export default function ResetPassword({email} : {email:string}) {
     const router = useRouter()
     const [otp, setOtp] = useState(["", "", "", ""])
+    const [password, setPassword] = useState("")
+    const[passError, setPassError] = useState("")
+    const [isPassShow, setIsPassShow] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const inputRefs = useRef<(HTMLInputElement | null)[]>([])
     const handleSubmit = async(e:React.FormEvent)=> {
@@ -17,17 +21,16 @@ function VerifyOtp({email} : {email:string}) {
         const otpString = otp.join("")
         if (otpString.length !== 4) return
         try {
-            const response = await axios.post('/api/auth/verify-otp', {
-                email, otp : otpString
-            })
-            toast.success(response.data.message || "Otp successfully verified")
+            const response = await axios.post('/api/auth/reset-password', {email, otp:otpString, password})
+            toast.success(response.data.message || "Password reset successfully")
             router.push('/sign-in')
+            setPassword("")
+            setOtp(["", "", "", ""])
         } catch (error) {
-           const axiosError = error as AxiosError<ApiResponse>
-           toast.error(axiosError.response?.data?.message || "Something went wrong") 
+            const axiosError = error as AxiosError<ApiResponse>
+            toast.error(axiosError?.response?.data?.message || "Something went wrong")
         }finally{
             setIsSubmitting(false)
-            setOtp(["", "", "", ""])
         }
     }
 
@@ -62,6 +65,14 @@ function VerifyOtp({email} : {email:string}) {
         }
     }
 
+    const validataPass = () => {
+        const response = passwordSchema.safeParse({password})
+        if(!response.success && response.error.flatten().fieldErrors.password) {
+            setPassError(response.error.flatten().fieldErrors.password?.[0] || "Invalid password")
+        }
+        else setPassError("")
+    }
+
   return (
         <div className='relative min-h-screen pt-20 px-6 pb-5 flex flex-col justify-center items-center overflow-hidden w-full'>
             
@@ -81,7 +92,7 @@ function VerifyOtp({email} : {email:string}) {
                     transition={{ duration: 0.7 }}
                     className='text-3xl text-white font-semibold mb-1'
                 >
-                    Verify OTP
+                    Reset Password
                 </motion.h1>
 
                 <motion.p
@@ -90,7 +101,7 @@ function VerifyOtp({email} : {email:string}) {
                     transition={{ duration: 0.3, delay: 0.5 }}
                     className='text-gray-400 text-sm mb-6 text-center leading-relaxed'
                 >
-                    Please enter the otp sent to your email
+                    Enter the OTP sent to your email and your new password.
                 </motion.p>
 
                 <motion.form
@@ -118,9 +129,38 @@ function VerifyOtp({email} : {email:string}) {
                             />
                         ))}
                     </div>
+                    <div className='relative'>
+                        <Lock size={18} className='absolute left-4 top-3.5 text-gray-400 pointer-events-none' />
+                        <input
+                            name='password'
+                            type={isPassShow ? "text" : "password"}
+                            placeholder='Password'
+                            required={true}
+                            spellCheck={false}
+                            value={password}
+                            autoCorrect="off"
+                            autoCapitalize="off"
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                                if (passError) setPassError("")
+                            }}
+                            onBlur={validataPass}
+                            className='focus:outline-none w-full border border-white/10 rounded-full bg-black/20 pl-11 pr-10 py-3 text-white text-sm placeholder-gray-500 focus:ring-1 focus:ring-[#f0146b] focus:border-[#f0146b] focus:bg-black/40 transition-all shadow-inner' />
+
+                        <button className='absolute right-4 top-3.5 text-gray-400 hover:text-gray-300 transition-colors cursor-pointer'
+                            onClick={() => setIsPassShow(!isPassShow)}
+                            type='button'
+                        >
+                            {isPassShow ? <EyeClosed size={18} /> : <EyeIcon size={18} />}
+                        </button>
+
+                        {passError && (
+                            <p className="text-red-500 text-xs mt-1 ml-4">{passError}</p>
+                        )}
+                    </div>
 
                     {(() => {
-                        const formValid = otp.join("").length === 4
+                        const formValid = otp.join("").length === 4 && passError ==="" && password!==""
                         return <button
                             disabled={isSubmitting || !formValid}
                             type='submit'
@@ -129,10 +169,10 @@ function VerifyOtp({email} : {email:string}) {
                             {isSubmitting ? (
                                 <>
                                     <Loader2 size={18} className='animate-spin text-white' />
-                                    verifying...
+                                    Resetting...
                                 </>
                             ) : (
-                                "Verify"
+                                "Reset password"
                             )}
                         </button>
                     })()}
@@ -143,5 +183,3 @@ function VerifyOtp({email} : {email:string}) {
     )
 }
 
-
-export default VerifyOtp

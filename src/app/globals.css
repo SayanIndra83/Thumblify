@@ -33,3 +33,24 @@ button {
         background-position: 0% 50%;
     }
 }
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-track {
+  padding: 0;
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  /* background: #ad1859; */
+  background: #000;
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* background: #ad1859;  */
+  background: #000; 
+}

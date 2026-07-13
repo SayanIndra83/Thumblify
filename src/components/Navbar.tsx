@@ -1,5 +1,5 @@
 'use client'
-import { MenuIcon, XIcon } from "lucide-react";
+import { ArrowRight, MenuIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -33,8 +33,9 @@ export default function Navbar() {
 
                 <button 
                 onClick={() => router.push("/sign-in")}
-                className="hidden md:block px-6 py-2.5 bg-pink-600 hover:bg-pink-700 active:scale-95 transition-all rounded-full">
+                className="hidden md:flex gap-2 items-center justify-center px-6 py-2.5 bg-pink-600 hover:bg-pink-700 group active:scale-95 transition-all rounded-full">
                     Get Started
+                <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-all duration-200 "/>
                 </button>
                 <button onClick={() => setIsOpen(true)} className="md:hidden">
                     <MenuIcon size={26} className="active:scale-90 transition" />
