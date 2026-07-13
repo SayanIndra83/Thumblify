@@ -1,9 +1,12 @@
 "use client"
+
+import GenerateClient from "@/components/GenerateClient"
+
 function page() {
   return (
-    <div>
-      
-    </div>
+   <>
+   <GenerateClient/>
+   </>
   )
 }
 

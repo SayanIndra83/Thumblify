@@ -6,6 +6,7 @@ import { motion } from "motion/react"
 import { useRouter } from "next/navigation"
 import React, { useRef, useState } from "react"
 import toast from "react-hot-toast"
+import Softbackdrop from "./Softbackdrop"
 
 export default function ResetPassword({email} : {email:string}) {
     const router = useRouter()
@@ -74,11 +75,9 @@ export default function ResetPassword({email} : {email:string}) {
     }
 
   return (
+    <>
+    <Softbackdrop/>
         <div className='relative min-h-screen pt-20 px-6 pb-5 flex flex-col justify-center items-center overflow-hidden w-full'>
-            
-            <div className="absolute top-[15%] left-[10%] w-[350px] h-[350px] bg-[#f0146b]/20 blur-[130px] rounded-full pointer-events-none"></div>
-            <div className="absolute bottom-[10%] right-[15%] w-[450px] h-[450px] bg-[#f0146b]/15 blur-[150px] rounded-full pointer-events-none"></div>
-            <div className="absolute top-[5%] right-[40%] w-[300px] h-[200px] bg-[#f0146b]/15 blur-[150px] rounded-full pointer-events-none"></div>
 
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -180,6 +179,7 @@ export default function ResetPassword({email} : {email:string}) {
                 </motion.form>
             </motion.div>
         </div>
+        </>
     )
 }
 
