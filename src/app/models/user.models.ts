@@ -5,7 +5,8 @@ export interface IUser{
     email: string;
     password: string | null;
     userImage:string | null;
-    isVerified: boolean
+    isVerified: boolean;
+    thumbnails?: [mongoose.Types.ObjectId]
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
@@ -32,6 +33,10 @@ userImage:{
 isVerified:{
     type: Boolean,
     default:false
+},
+thumbnails:{
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Thumbnail"
 }
 }
 , {timestamps: true})

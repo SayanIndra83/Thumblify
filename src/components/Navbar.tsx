@@ -62,7 +62,7 @@ export default function Navbar() {
                         </Link>
                     ))}
                     {user ? (
-                        <Link href={'/generate'} className="hover:text-pink-500 transition">
+                        <Link href={'/user/generate'} className="hover:text-pink-500 transition">
                             Generate
                         </Link>
                     )
