@@ -12,7 +12,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 export const metadata: Metadata = {
-  title: "Thumbly - AI Thumnail Generator",
+  title: "Thumblify - AI Thumbnail Generator",
 };
 
 export default function RootLayout({

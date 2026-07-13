@@ -61,11 +61,17 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    {user && (
+                    {user ? (
                         <Link href={'/generate'} className="hover:text-pink-500 transition">
                             Generate
                         </Link>
-                    )}
+                    )
+                :
+                (
+                  <Link href={'/#pricing'} className="hover:text-pink-500 transition">
+                            Pricing
+                        </Link>  
+                )}
                 </div>
                 
 
@@ -210,6 +216,12 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
+                    <Link href={'/#pricing'}
+                    onClick={() => setIsOpen(false)}
+                    className="w-full text-center py-3 text-gray-300 hover:text-white font-medium hover:bg-white/5 rounded-xl transition-colors"
+                    >
+                    Pricing
+                    </Link>
                     
                     {user && (
                         <>

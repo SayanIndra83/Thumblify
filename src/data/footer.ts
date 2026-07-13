@@ -11,16 +11,6 @@ export const footerData: IFooter[] = [
         ]
     },
     {
-        title: "Resources",
-        links: [
-            { name: "Company", href: "#company" },
-            { name: "Blogs", href: "#blogs" },
-            { name: "Community", href: "#community" },
-            { name: "Careers", href: "#careers" },
-            { name: "About", href: "#about" },
-        ]
-    },
-    {
         title: "Legal",
         links: [
             { name: "Privacy", href: "#privacy" },
