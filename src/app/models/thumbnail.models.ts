@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface IThumbnail {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     userId: string;
     title: string;
     description?: string;

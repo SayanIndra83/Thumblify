@@ -10,7 +10,7 @@ import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { ApiResponse } from "@/app/types/ApiResponse";
 import PreviewThumbnailSection from "./PreviewThumbnailSection";
-import thumb_1 from "../../public/assets/thumb_3.jpg";
+import thumb_1 from "@/assets/thumb_1.jpg";
 
 export const colorSchemes = [
   { id: "vibrant", name: "Vibrant", colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"] },
@@ -83,8 +83,6 @@ function GenerateClient() {
       toast.success(
         response.data.message || "Thumbnail generated successfully",
       );
-      setTitle("");
-      setAdditionalDetails("");
       setPreviewThumbnail(response.data?.thumbnail);
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
