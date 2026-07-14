@@ -41,20 +41,6 @@ export const thumbnailStyles = [
 ];
 export type ThumbnailStyle = (typeof thumbnailStyles)[number];
 
-const sampleThumbnail: IThumbnail = {
-  userId: "6942b3bd2a93a220baa331b3",
-  title: "Top smartwatch under 1499",
-  style: "Bold & Graphic",
-  aspect_ratio: "16:9",
-  color_scheme: "vibrant",
-  text_overlay: true,
-  image_url: thumb_1.src,
-  description: "add multiple smartwatches",
-  isGenerating: false,
-  createdAt: "2025-12-19T09:50:43.727Z",
-  updatedAt: "2025-12-19T09:51:07:874Z",
-};
-
 function GenerateClient() {
   const session = useSession();
   const user = session.data?.user;

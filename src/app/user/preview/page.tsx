@@ -1,5 +1,6 @@
 'use client'
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export const yt_html = `
     <!DOCTYPE html>
@@ -219,4 +220,11 @@ function YTPreveiw() {
   )
 }
 
-export default YTPreveiw
+function page () {
+    return 
+    (<Suspense fallback={<div className="flex justify-center p-10 text-zinc-400">Loading...</div>}>
+    <YTPreveiw />
+    </Suspense>)
+}
+
+export default page
