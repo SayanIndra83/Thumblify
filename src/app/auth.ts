@@ -72,7 +72,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             user.userName = existingUser.userName
             user.email = existingUser.email
             user.isVerified = existingUser.isVerified
-            if(existingUser.userImage) user.userImage = existingUser.userImage
+            user.userImage = user.image || existingUser.userImage
       }
 
       return true
