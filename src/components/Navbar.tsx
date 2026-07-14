@@ -150,12 +150,12 @@ export default function Navbar() {
                                         </Link>
 
                                         <Link
-                                            href={'/user/my-generates'}
+                                            href={'/user/my-generations'}
                                             onClick={() => setOpen(false)}
                                             className='flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white font-medium text-sm group transition-all duration-200'
                                         >
                                             <LayoutGrid className='text-gray-400 group-hover:text-[#f0146b] h-4 w-4 transition-colors' />
-                                            <span>My Generates</span>
+                                            <span>My Generations</span>
                                         </Link>
 
                                         <button
@@ -235,11 +235,11 @@ export default function Navbar() {
                             </Link>
                             
                             <Link 
-                                href={'/user/my-generates'} 
+                                href={'/user/my-generations'} 
                                 onClick={() => setIsOpen(false)}
                                 className="w-full text-center py-3 text-gray-300 hover:text-[#f0146b] font-medium hover:bg-white/5 rounded-xl transition-colors"
                             >
-                                My Generates
+                                My Generations
                             </Link>
                             
                             <button

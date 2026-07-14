@@ -1,5 +1,7 @@
 import { auth } from "@/app/auth";
 import dbConnect from "@/app/lib/db";
+import redis from "@/app/lib/Redis";
+import { cloudinaryDel } from "@/app/lib/uploadCloudinary";
 import ThumbModel from "@/app/models/thumbnail.models";
 import UserModel from "@/app/models/user.models";
 import { NextRequest, NextResponse } from "next/server";
@@ -25,6 +27,15 @@ export async function DELETE(req:NextRequest, {params} : {params:Promise<{thumbn
         await UserModel.findByIdAndUpdate(userId, {
             $pull: {thumbnails: thumbnailId}
         })
+        await redis.del(`thumbnails:${userId}`)
+        // delete from cloudinary
+        if(deletedThumbnail.image_url) {
+            try {
+                await cloudinaryDel(deletedThumbnail.image_url)
+            } catch (error) {
+                console.log("Cloudinary deletion error", error)
+            }
+        }
         return NextResponse.json({message: "Thumbnail deleted", success: true}, {status: 200})
     } catch (error) {
         return NextResponse.json({message: "Internal Server Error", success: false}, {status: 500})

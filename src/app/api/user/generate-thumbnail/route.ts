@@ -1,6 +1,7 @@
 import { auth } from "@/app/auth";
 import { aiGenerate } from "@/app/lib/ai";
 import dbConnect from "@/app/lib/db";
+import redis from "@/app/lib/Redis";
 import ThumbModel from "@/app/models/thumbnail.models";
 import UserModel from "@/app/models/user.models";
 import { NextRequest, NextResponse } from "next/server";
@@ -20,7 +21,7 @@ export async function POST(req:NextRequest) {
         if(!existingUser) return NextResponse.json({message: "User not found", success: false}, {status: 404})
 
         // Continue with the rest of the logic
-        const { title, description, style, aspect_ratio, color_scheme, text_overlay, user_prompt } = await req.json();
+        const { title, description, style, aspect_ratio, color_scheme} = await req.json();
 
         // FLOW OF OUR TASK -->>
         // flow --> get the thumbnail datas and create an document with isGenerating true
@@ -33,22 +34,24 @@ export async function POST(req:NextRequest) {
 
 
         const thumbnail = await ThumbModel.create({
-            title, description, style, aspect_ratio, color_scheme, text_overlay, user_prompt, userId: user.id, isGenerating: true
+            title, description, style, aspect_ratio, color_scheme,  userId: user.id, isGenerating: true
         })
 
+        // console.log(thumbnail)
         thumbnailId = thumbnail._id.toString()
 
         await UserModel.findByIdAndUpdate(user.id, {
             $push: {thumbnails: thumbnail._id}
         })
 
-        const cloudinaryUrl = await aiGenerate({title, description, style, aspect_ratio, color_scheme, text_overlay, user_prompt})
-
+        const cloudinaryUrl = await aiGenerate({title, description, style, aspect_ratio, color_scheme})
+        
         thumbnail.image_url = cloudinaryUrl.secure_url
         thumbnail.isGenerating = false
         await thumbnail.save()
         
-        return NextResponse.json({message: "Thumbnail generated",imageUrl : cloudinaryUrl.secure_url, success: true}, {status: 201})
+        await redis.del(`thumbnails:${currUserId}`)
+        return NextResponse.json({message: "Thumbnail generated",thumbnail, success: true}, {status: 201})
     } catch (error) {
         try {
             if(thumbnailId && currUserId) {

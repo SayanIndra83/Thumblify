@@ -36,7 +36,7 @@ const colorSchemeDescriptions = {
 const ai = new GoogleGenAI({apiKey: process.env.GOOGLE_API_KEY});
 
 export const aiGenerate = async (thumbnail: IThumb) => {
-    const {title, description, style, aspect_ratio, color_scheme, text_overlay, user_prompt} = thumbnail
+    const {title, description, style, aspect_ratio, color_scheme} = thumbnail
     const generationConfig : GenerateContentConfig = {
       maxOutputTokens: 32768,
       temperature: 1,
@@ -56,9 +56,11 @@ export const aiGenerate = async (thumbnail: IThumb) => {
 
     let prompt = `Create a ${stylePrompts[style as keyof typeof stylePrompts]} for : "${title}" `;
     if(color_scheme) prompt+= `Use a ${colorSchemeDescriptions[color_scheme as keyof typeof colorSchemeDescriptions]} color scheme.`
-    if(user_prompt) prompt += `Additional details: ${user_prompt}.`
+    if(description) prompt += `Additional details: ${description}.`
 
     prompt += `The thumbnail should be ${aspect_ratio}, visually stunning, and designed to maximize click-through rate. Make it bold, professional and impossible to ignore.`
+
+    // console.log(prompt)
     try {
       const response:any = await ai.models.generateContent({
         model: "gemini-2.5-flash",
@@ -69,6 +71,8 @@ export const aiGenerate = async (thumbnail: IThumb) => {
       if(!response?.candidates?.[0]?.content?.parts) throw new Error("Failed to generate the thumbnail")
       
       const parts = response.candidates[0].content.parts
+
+      console.log(parts)
 
       let finalBuffer : Buffer | null = null;
 
@@ -96,6 +100,7 @@ export const aiGenerate = async (thumbnail: IThumb) => {
       
       return cloudinaryUrl
     } catch (error) {
+      console.log(error)
       throw new Error("Failed to generate thumbnail")
     }
 }

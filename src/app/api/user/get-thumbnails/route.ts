@@ -1,5 +1,6 @@
 import { auth } from "@/app/auth";
 import dbConnect from "@/app/lib/db";
+import redis from "@/app/lib/Redis";
 import ThumbModel from "@/app/models/thumbnail.models";
 import UserModel from "@/app/models/user.models";
 import { NextResponse } from "next/server";
@@ -11,10 +12,19 @@ export async function GET(req: Request) {
             return NextResponse.json({ message: "Unauthorized", success: false }, { status: 401 });
         }   
         const userId = session.user.id;
+        const redisGet = await redis.get(`thumbnails:${userId}`)
+        
+        if(redisGet){
+            const parsedThumbnails = typeof redisGet === 'string' ? JSON.parse(redisGet): redisGet
+            return NextResponse.json({ message: "Thumbnails retrieved", success: true, thumbnails: parsedThumbnails}, { status: 200 });}
+
         await dbConnect();
         const user = await UserModel.findById(userId).select("thumbnails").populate({ path: "thumbnails", options: { sort: { createdAt: -1 } } }).lean();
 
+
         const thumbnails = user?.thumbnails || [];
+        // set redis with default 7 days expiry
+        await redis.set(`thumbnails:${userId}`, JSON.stringify(thumbnails), {ex: 7*24*60*60})
         return NextResponse.json({ message: "Thumbnails retrieved", success: true, thumbnails }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ message: "Internal Server Error", success: false }, { status: 500 });

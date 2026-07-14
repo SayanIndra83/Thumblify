@@ -1,4 +1,4 @@
-import { RectangleHorizontal } from "lucide-react"
+import { RectangleHorizontal, RectangleVertical, Square } from "lucide-react"
 import React from "react";
 
 export const aspectRatios = ["16:9", "1:1", "9:16"];
@@ -8,8 +8,8 @@ export type AspectRatio = (typeof aspectRatios)[number];
 export const AspectRatioSelector = ({value, onChange} : {value: AspectRatio; onChange: (ratio: AspectRatio) => void}) => {
     const iconMap = {
         '16:9' : <RectangleHorizontal className="size-6"/>,
-        '1:1' : <RectangleHorizontal className="size-6"/>,
-        '9:16' : <RectangleHorizontal className="size-6"/>,
+        '1:1' : <Square className="size-6"/>,
+        '9:16' : <RectangleVertical className="size-6"/>,
     } as Record<AspectRatio ,React.ReactNode>
   return (
     <div className="space-y-3 dark">

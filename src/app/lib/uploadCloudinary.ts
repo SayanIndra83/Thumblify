@@ -15,3 +15,26 @@ import { v2 as cloudinary } from 'cloudinary';
             throw new Error("Failed to upload on cloudinary")
         }
     }
+
+    const getPublicIdFromUrl = (url: string) => {
+    const splitUrl = url.split("/");
+    const filenameWithExt = splitUrl[splitUrl.length - 1];
+    const folder = splitUrl[splitUrl.length - 2];
+    const filename = filenameWithExt.substring(0, filenameWithExt.lastIndexOf('.'));
+    
+    return `${folder}/${filename}`;
+    };
+
+    export const cloudinaryDel = async(url : string) =>{
+
+        try {
+            if(!url) {
+                throw new Error("Url not provided")
+            }
+            const public_id = getPublicIdFromUrl(url)
+           await cloudinary.uploader.destroy(public_id)
+        } catch (error) {
+            throw new Error("Cloudinary deletion failed")
+        }
+
+    }
