@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { navlinks } from "@/data/navlinks";
+import {navlinks1, navlinks2 } from "@/data/navlinks";
 import { INavLink } from "@/dataTypes";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -56,22 +56,20 @@ export default function Navbar() {
                 </a>
 
                 <div className="hidden md:flex items-center gap-8 transition duration-500">
-                    {navlinks.map((link: INavLink) => (
+                    {user ? (
+                        navlinks2.map((link: INavLink) => (
                         <Link key={link.name} href={link.href} className="hover:text-pink-500 transition">
                             {link.name}
                         </Link>
-                    ))}
-                    {user ? (
-                        <Link href={'/user/generate'} className="hover:text-pink-500 transition">
-                            Generate
+                    ))
+                    ) :
+                    (
+                        navlinks1.map((link: INavLink) => (
+                        <Link key={link.name} href={link.href} className="hover:text-pink-500 transition">
+                            {link.name}
                         </Link>
-                    )
-                :
-                (
-                  <Link href={'/#pricing'} className="hover:text-pink-500 transition">
-                            Pricing
-                        </Link>  
-                )}
+                    ))
+                    )}
                 </div>
                 
 
@@ -206,7 +204,7 @@ export default function Navbar() {
                 </button>
 
                 <div className="flex flex-col items-center w-full max-w-xs gap-3">
-                    {navlinks.map((link: INavLink) => (
+                    {navlinks1.map((link: INavLink) => (
                         <Link 
                             key={link.name} 
                             href={link.href} 
@@ -216,12 +214,6 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    <Link href={'/#pricing'}
-                    onClick={() => setIsOpen(false)}
-                    className="w-full text-center py-3 text-gray-300 hover:text-white font-medium hover:bg-white/5 rounded-xl transition-colors"
-                    >
-                    Pricing
-                    </Link>
                     
                     {user && (
                         <>

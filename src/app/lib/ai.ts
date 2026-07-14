@@ -63,7 +63,7 @@ export const aiGenerate = async (thumbnail: IThumb) => {
     // console.log(prompt)
     try {
       const response:any = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-pro",
         contents: [prompt],
         config: generationConfig
       })
@@ -93,7 +93,7 @@ export const aiGenerate = async (thumbnail: IThumb) => {
       // upload on cloudinary
       const cloudinaryUrl = await CloudinaryUpload(filePath)
       // remove from local machine
-      fs.unlinkSync("filePath")
+      fs.unlinkSync(filePath)
 
       console.log(cloudinaryUrl)
       if(!cloudinaryUrl || !cloudinaryUrl.url) throw new Error("Cloudinary upload failed")

@@ -49,7 +49,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages:{signIn : "/sign-in"},
   secret: process.env.BETTER_AUTH_SECRET,
   session:{
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 3*24*60*60
   },
   callbacks:{
     // using google

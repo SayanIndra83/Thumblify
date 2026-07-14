@@ -11,7 +11,7 @@ import { passwordSchema } from '@/app/schema/password.schema'
 import { emailSchema } from '@/app/schema/email.schema'
 import Softbackdrop from './Softbackdrop'
 
-function LoginForm() {
+function LoginForm({callbackUrl} : {callbackUrl: string}) {
     const router = useRouter()
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -52,7 +52,7 @@ function LoginForm() {
 
             if (response?.ok) {
                 toast.success("Logged in")
-                router.push('/')
+                router.push(callbackUrl)
                 router.refresh()
             }
         } catch (error) {

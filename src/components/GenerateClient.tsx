@@ -187,7 +187,7 @@ function GenerateClient() {
             </div>
 
             {/* right wala part */}
-            <div className=" rounded-2xl bg-white/8 border border-white/10 shadow-xl p-6 h-auto lg:h-[55%]">
+            <div className=" rounded-2xl bg-white/8 border border-white/10 shadow-xl p-6 h-auto">
               <div>
                 <h2 className="text-xl font-bold text-zinc-100 mb-5">
                   Preview

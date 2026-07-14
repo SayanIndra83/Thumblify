@@ -10,7 +10,10 @@ import thumb_6 from "@/assets/thumb_6.jpg"
 import thumb_7 from "@/assets/thumb_7.jpg"
 import { AspectRatio } from "./AspectRatioSelector"
 import { useRouter } from "next/navigation"
-import { ArrowUpRight, Download, Loader, MoreVertical, Trash2 } from "lucide-react"
+import { ArrowUpRight, Download, Loader, Loader2, MoreVertical, RefreshCcw, Trash2 } from "lucide-react"
+import axios, { AxiosError } from "axios"
+import toast from "react-hot-toast"
+import { ApiResponse } from "@/app/types/ApiResponse"
 export const dummyThumbnails = [
     {
         _id: "69451ff3c9ea67e4c930f6a6",
@@ -114,6 +117,7 @@ function MyGenerationsCli() {
     const [thumbnails, setThumbnails] = useState<IThumbnail[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [activeMenu, setActiveMenu] = useState<string | null>(null)
+    const [refreshing, setRefreshing] = useState(false)
     const aspectClassMap:Record<AspectRatio, string> = {
         '16:9' : 'aspect-video',
         '1:1'  :  'aspect-square',
@@ -122,6 +126,18 @@ function MyGenerationsCli() {
 
     const fetchThumbnails = async () => {
         setThumbnails(dummyThumbnails as IThumbnail[])
+        setIsLoading(true)
+        try {
+           const response = await axios.get(`/api/user/get-thumbnails`);
+        //    console.log(response.data.thumbnails) 
+        setThumbnails(response.data.thumbnails as IThumbnail[])
+        } catch (error) {
+            const axiosError = error as AxiosError<ApiResponse>
+            toast.error(axiosError.response?.data.message || "Failed to fetch your thumbnails")
+        }finally{
+            setIsLoading(false) ;
+            setRefreshing(false)
+        }
     }
 
     useEffect(() => {
@@ -131,22 +147,60 @@ function MyGenerationsCli() {
     const handleDownload = (imageUrl: string) => {
         window.open(imageUrl, '_blank')
     }
+
+    // TODO
     const handleDelete = async(thumbnailId:string) => {
-        console.log(thumbnailId)
+        setIsLoading(true)
+        try {
+            const response = await axios.delete(`/api/user/delete-thumbnail/${thumbnailId}`)
+            toast.success(response.data.message || "Thumbnail deleted")
+            await fetchThumbnails()
+        } catch (error) {
+            const axiosError = error as AxiosError<ApiResponse>
+            toast.error(axiosError.response?.data.message || "Deletion failed")
+        }finally{setIsLoading(false)}
     }
 
+    const handleRefresh = async () => {
+        setRefreshing(true)
+        await fetchThumbnails()
+    }
     const router = useRouter()
 
   return (
     <>
     <Softbackdrop/>
 
-    <div className="mt-32 min-h-screen px-6 md:px-16 lg:px-24 xl:px-32">
+    <div className="mt-32 h-auto px-6 md:px-16 lg:px-24 xl:px-32">
 
-        <div className="mb-8">
-            <h2 className="text-2xl font-bold text-zinc-200">My Generations</h2>
-            <p className="text-sm text-zinc-400 mt-1">View and manage all your AI-generated thumbnails</p>
-        </div>
+        <div className="w-full flex justify-between items-center mb-8">
+    <div>
+        <h2 className="text-xl md:text-2xl font-bold text-zinc-200">My Generations</h2>
+        <p className="text-xs md:text-sm text-zinc-400 mt-1">View and manage all your AI-generated thumbnails</p>
+    </div>
+    
+    <div>
+        <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className={`hidden lg:flex items-center gap-2.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border backdrop-blur-md
+            ${refreshing 
+                ? 'bg-white/5 border-white/5 text-zinc-500 cursor-not-allowed' 
+                : 'bg-white/5 border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white hover:border-white/20 active:scale-95 shadow-sm'
+            }`}
+        >
+            {refreshing ? (
+                <>
+                    <Loader2 className="size-4 animate-spin text-zinc-400"/> Refreshing...
+                </>
+            ) : (
+                <>
+                    <RefreshCcw className="size-4"/> Refresh
+                </>
+            )}
+        </button>
+    </div>
+</div>
 
         {isLoading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

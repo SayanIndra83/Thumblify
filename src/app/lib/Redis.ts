@@ -1,7 +1,7 @@
 import { Redis } from '@upstash/redis'
 const redis = new Redis({
-  url: 'https://open-cod-135008.upstash.io',
-  token: 'gQAAAAAAAg9gAAIgcDIxYjJjMTUwNDA0Y2Y0YzUxODk1Yzg5Yjg3YTZhOWU2Mg',
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
 })
 
 
