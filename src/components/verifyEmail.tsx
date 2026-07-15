@@ -42,14 +42,14 @@ function VerifyEmail() {
     return (
         <>
         <Softbackdrop/>
-        <div className='relative min-h-screen px-6 py-10 pt-32 flex flex-col justify-center items-center overflow-hidden w-full'>
+        <div className='relative h-auto px-6 py-10 pt-32 flex flex-col justify-center items-center overflow-hidden w-full'>
 
 
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className='relative z-10 w-full max-w-md bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] p-8 rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col items-center'
+                className='relative z-10 w-full max-w-md bg-white/3 backdrop-blur-2xl border border-white/8 p-8 rounded-4xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col items-center'
             >
                 <motion.h1
                     initial={{ opacity: 0, y: -10 }}
@@ -64,7 +64,7 @@ function VerifyEmail() {
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.5 }}
-                    className='text-gray-400 text-sm mb-6'
+                    className='text-gray-400 text-sm mb-6 text-center leading-relaxed'
                 >
                     Verify your registered email to reset password
                 </motion.p>

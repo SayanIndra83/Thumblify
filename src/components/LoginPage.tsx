@@ -63,7 +63,7 @@ function LoginForm({callbackUrl} : {callbackUrl: string}) {
     return (
         <>
         <Softbackdrop/>
-        <div className='relative min-h-screen px-6 py-10 pt-32 flex flex-col justify-center items-center overflow-hidden w-full'>
+        <div className='relative h-auto px-6 py-10 pt-32 flex flex-col justify-center items-center overflow-hidden w-full'>
 
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}

@@ -66,14 +66,14 @@ function SignUpForm() {
         <>
         <Softbackdrop/>
         
-        <div className='relative min-h-screen pt-32 px-6 py-10 flex flex-col justify-center items-center overflow-hidden w-full'>
+        <div className='relative h-auto pt-32 px-6 py-10 flex flex-col justify-center items-center overflow-hidden w-full'>
 
 
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className='relative z-10 w-full max-w-md bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] p-8 rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col items-center'
+                className='relative z-10 w-full max-w-md bg-white/3 backdrop-blur-2xl border border-white/8 p-8 rounded-4xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col items-center'
             >
                 <motion.h1
                     initial={{ opacity: 0, y: -10 }}
@@ -207,7 +207,7 @@ function SignUpForm() {
 
                     <button
                         type='button'
-                        className='w-full flex gap-3 items-center justify-center bg-white/[0.02] hover:bg-white/[0.06] border border-white/5 py-3 rounded-full cursor-pointer text-gray-300 text-sm backdrop-blur-md transition-all duration-200'
+                        className='w-full flex gap-3 items-center justify-center bg-white/2 hover:bg-white/6 border border-white/5 py-3 rounded-full cursor-pointer text-gray-300 text-sm backdrop-blur-md transition-all duration-200'
                         onClick={() => signIn("google", { callbackUrl: '/' })}
                     >
                         <Image src={googleImage} alt='google logo' width={18} height={18} /> 

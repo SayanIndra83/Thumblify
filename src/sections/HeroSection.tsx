@@ -54,6 +54,22 @@ export default function HeroSection() {
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 320, damping: 70, mass: 1 }}
             >
+                {session.data?.user ? (
+                    <>
+                <button 
+                onClick={() => router.push('/sign-in')}
+                className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-7 h-11">
+                    Start Today
+                </button>
+                <button className="flex items-center gap-2 border border-pink-900 hover:bg-pink-950/50 transition rounded-full px-6 h-11">
+                    <VideoIcon strokeWidth={1} />
+                    <span>See how it works</span>
+                </button>
+                    </>
+                ) 
+                
+                : (
+                    <>
                 <button 
                 onClick={() => router.push(redirect)}
                 className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-7 h-11">
@@ -63,6 +79,8 @@ export default function HeroSection() {
                     <VideoIcon strokeWidth={1} />
                     <span>See how it works</span>
                 </button>
+                    </>
+                )}
             </motion.div>
 
             <div className="flex flex-wrap justify-center items-center gap-4 md:gap-14 mt-12">

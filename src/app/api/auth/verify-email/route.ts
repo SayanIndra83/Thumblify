@@ -19,7 +19,7 @@ export async function POST(req:NextRequest) {
         await redis.set(`user_otp:${email}`, otp, {ex: 600})
 
         // send email
-         const username = user?.userName || "there"
+        const username = user?.userName || "there"
         const subject = "Password Reset Verification Code";
     
       const html = `
@@ -47,7 +47,7 @@ export async function POST(req:NextRequest) {
         </p>
       </div>
     `;
-        await client.publishJSON({
+      await client.publishJSON({
             url: `${process.env.NEXT_BASE_PUBLIC_URL}/api/worker`,
             body:{
                 to : email
@@ -55,9 +55,9 @@ export async function POST(req:NextRequest) {
                 type: "EMAIL_VERIFICATION"
             }
         })
-        return NextResponse.json({message: "An otp has been sent to your email", success: true, otp}, {status: 201})
+        return NextResponse.json({message: "An otp has been sent to your email", success: true}, {status: 201})
     } catch (error) {
         console.log(error)
-        return NextResponse.json({message: "An unexpected error occured", success: false}, {status: 500})
+        return NextResponse.json({message: "Failed to send the verification email. Please try again.", success: false}, {status: 500})
     }
 }

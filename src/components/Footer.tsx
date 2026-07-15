@@ -8,7 +8,7 @@ export default function Footer() {
     const session  = useSession()
     const user = session?.data?.user
     return (
-        <footer className="w-full mt-40 border-t border-white/[0.05] bg-[#070305]/20 backdrop-blur-sm">
+        <footer className="overflow-hidden w-full mt-40 border-t border-white/5 bg-[#070305]/20 backdrop-blur-sm">
             <div className="pt-10 pb-5 px-6 md:px-16 lg:px-24 xl:px-32 text-sm text-gray-400 max-w-[1600px] mx-auto flex flex-col gap-8">
                 
                 <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-8">
