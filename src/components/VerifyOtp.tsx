@@ -66,7 +66,7 @@ function VerifyOtp({email} : {email:string}) {
   return (
     <>
         <Softbackdrop/>
-        <div className='relative h-auto pt-20 px-6 pb-5 flex flex-col justify-center items-center overflow-hidden w-full'>
+        <div className='relative min-h-[70%] px-6 pb-20 pt-32 flex flex-col justify-center items-center overflow-hidden w-full'>
 
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}

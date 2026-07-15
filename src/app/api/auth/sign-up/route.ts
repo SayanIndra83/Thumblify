@@ -24,7 +24,7 @@ export async function POST(req:NextRequest) {
         // give email handling to queue
         
         // mailing configure
-        const username = existingUser?.userName || "there"
+        const username = userName || "there"
         const subject = "Verify your email address";
         
         const html = `

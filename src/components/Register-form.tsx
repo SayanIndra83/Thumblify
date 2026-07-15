@@ -66,7 +66,7 @@ function SignUpForm() {
         <>
         <Softbackdrop/>
         
-        <div className='relative h-auto pt-32 px-6 py-10 flex flex-col justify-center items-center overflow-hidden w-full'>
+        <div className='relative min-h-[70%] px-6 pb-20 pt-32 flex flex-col justify-center items-center overflow-hidden w-full'>
 
 
             <motion.div 
