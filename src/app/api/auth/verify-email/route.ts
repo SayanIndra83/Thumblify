@@ -43,7 +43,7 @@ export async function POST(req:NextRequest) {
         <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
         
         <p style="color: #9ca3af; font-size: 12px; text-align: center;">
-          &copy; ${new Date().getFullYear()} Thumbly. All rights reserved.
+          &copy; ${new Date().getFullYear()} Thumblify. All rights reserved.
         </p>
       </div>
     `;

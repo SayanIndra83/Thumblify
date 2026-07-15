@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 export const sendMail = async(to: string, subject : string, html : string)=> {
     try {
         const response = await transporter.sendMail({
-    from: `"Thumbly" <${process.env.SMTP_USER}>`,
+    from: `"Thumblify" <${process.env.SMTP_USER}>`,
     to,
     subject,
     html

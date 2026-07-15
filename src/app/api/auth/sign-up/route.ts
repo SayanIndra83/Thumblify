@@ -55,7 +55,7 @@ export async function POST(req:NextRequest) {
             <p style="color: #9ca3af; font-size: 12px; text-align: center; line-height: 1.5;">
                 If you didn't attempt to create an account with this email address, you can safely ignore this message.
                 <br><br>
-                &copy; ${new Date().getFullYear()} Thumbly. All rights reserved.
+                &copy; ${new Date().getFullYear()} Thumblify. All rights reserved.
             </p>
         </div>
         `;
