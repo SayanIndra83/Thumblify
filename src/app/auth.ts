@@ -68,6 +68,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 })
             }
 
+            if(existingUser) {
+              existingUser.userImage = user.image || null
+              await existingUser.save()
+            }
             user.id = existingUser._id?.toString()
             user.userName = existingUser.userName
             user.email = existingUser.email
