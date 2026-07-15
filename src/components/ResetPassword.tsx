@@ -77,13 +77,13 @@ export default function ResetPassword({email} : {email:string}) {
   return (
     <>
     <Softbackdrop/>
-        <div className='relative min-h-screen pt-20 px-6 pb-5 flex flex-col justify-center items-center overflow-hidden w-full'>
+        <div className='relative min-h-[70%] pt-32 px-6 pb-20 flex flex-col justify-center items-center overflow-hidden w-full'>
 
             <motion.div 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className='relative z-10 w-full max-w-md bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] p-8 rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col items-center'
+                className='relative z-10 w-full max-w-md bg-white/3 backdrop-blur-2xl border border-white/8 p-8 rounded-4xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] flex flex-col items-center'
             >
                 <motion.h1
                     initial={{ opacity: 0, y: -10 }}
@@ -141,7 +141,7 @@ export default function ResetPassword({email} : {email:string}) {
                             autoCapitalize="off"
                             onChange={(e) => {
                                 setPassword(e.target.value)
-                                if (passError) setPassError("")
+                                setPassError("")
                             }}
                             onBlur={validataPass}
                             className='focus:outline-none w-full border border-white/10 rounded-full bg-black/20 pl-11 pr-10 py-3 text-white text-sm placeholder-gray-500 focus:ring-1 focus:ring-[#f0146b] focus:border-[#f0146b] focus:bg-black/40 transition-all shadow-inner' />
