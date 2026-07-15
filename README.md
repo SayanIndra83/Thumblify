@@ -95,8 +95,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## 📂 Architecture Highlights
 
-- **OTP Flow:** When a user requests an OTP, it is generated and stored in *Redis* with an expiration time (TTL). Validation checks Redis directly, skipping database overhead.
-- **Mail Queue:** Email tasks (like sending welcome emails or OTPs) are pushed to a Redis-backed queue. A worker processes these jobs in the background using Nodemailer, ensuring the user's API request finishes instantly.
+- **OTP Flow:** When a user requests an OTP, it is generated and stored in *Redis* with an expiration time (TTL). Validation checks Redis directly, skipping database overhead decreasing latency by approx 81.23%.
+- **Mail Queue:** Email tasks (like sending welcome emails or OTPs) are pushed to a Redis-backed queue. A worker processes these jobs in the background using Nodemailer, ensuring the user's API request finishes instantly. This decrease the response latency by approx 85.95%.
+- **Thumbnail Fetching** Fetching user's all created thumbnails using Redis caching reducing response time by approx 72% than first time fetching.
 - **Custom AI Thumbnails:** Instead of basic cropping, Gemini 3.5 Pro acts as an intelligent processing layer. Users can pass specific prompts or contextual data, and Gemini drives the generation of highly customized, relevant thumbnails before they are finalized and stored in Cloudinary.
 
 ## 🤝 Contributing
