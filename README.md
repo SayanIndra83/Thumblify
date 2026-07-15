@@ -1,4 +1,4 @@
-# 🚀 [Thumblify]
+# 🚀 Thumblify
 
 A full-stack, high-performance Thumbnail generation web application featuring a sleek UI, robust authentication, asynchronous email queues, and AI-powered media management.
 
