@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 [Thumblify]
 
-## Getting Started
+A full-stack, high-performance Thumbnail generation web application featuring a sleek UI, robust authentication, asynchronous email queues, and AI-powered media management.
 
-First, run the development server:
+Built with scalability and user experience in mind, this project leverages modern web technologies and generative AI to deliver a seamless experience.
+
+## ✨ Features
+
+- **Sleek UI Design:** Beautiful, responsive frontend crafted with components from [PrebuiltUI](https://prebuiltui.com).
+- **Secure Authentication:** Powered by **NextAuth.js** for seamless social and credential-based logins.
+- **Lightning-Fast OTPs:** OTP generation and validation cached instantly using **Redis** for ultra-low latency.
+- **Asynchronous Mail Queue:** Reliable email delivery handled via background job queues and **Nodemailer**, lowering the loading time significantly.
+- **Cloud Media Management:** Direct integration with **Cloudinary** for scalable image and asset hosting.
+- **AI-Powered Custom Thumbnails:** Intelligent, highly customizable thumbnail generation powered by **Gemini 3.5 Pro**, allowing context-aware image processing and generation on the fly.
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js (React) |
+| Authentication | NextAuth.js |
+| UI Components | Tailwind CSS & PrebuiltUI |
+| Caching | Redis (Upstash) |
+| Queue System and Worker | QStash(Upstash) |
+| Email Service | Nodemailer |
+| Media Storage | Cloudinary |
+| Generative AI | Google Gemini 3.5 Pro API |
+
+## ⚙️ Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [Redis](https://redis.io/) (running locally, or a cloud instance like Upstash)
+- A [Cloudinary](https://cloudinary.com/) account
+- An SMTP email server (e.g., Gmail, AWS SES, Resend SMTP)
+- A [Google AI Studio](https://aistudio.google.com/) API key for Gemini
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/SayanIndra83/Thumblify.git
+cd repo-name
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### 3. Set up environment variables
+
+Create a `.env` or `.env.local` file in the root of your project and add the following keys:
+
+```env
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_super_secret_string
+
+# Redis (for OTP and queues)
+REDIS_URL=redis://localhost:6379
+
+# Nodemailer / SMTP
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your_email@example.com
+SMTP_PASS=your_email_password
+EMAIL_FROM=noreply@yourdomain.com
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# Gemini AI
+GEMINI_API_KEY=your_gemini_3_5_pro_api_key
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Architecture Highlights
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **OTP Flow:** When a user requests an OTP, it is generated and stored in *Redis* with an expiration time (TTL). Validation checks Redis directly, skipping database overhead.
+- **Mail Queue:** Email tasks (like sending welcome emails or OTPs) are pushed to a Redis-backed queue. A worker processes these jobs in the background using Nodemailer, ensuring the user's API request finishes instantly.
+- **Custom AI Thumbnails:** Instead of basic cropping, Gemini 3.5 Pro acts as an intelligent processing layer. Users can pass specific prompts or contextual data, and Gemini drives the generation of highly customized, relevant thumbnails before they are finalized and stored in Cloudinary.
 
-## Learn More
+## 🤝 Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please feel free to submit a Pull Request.
+## 🧑‍💻 Aurhor 
+Sayan Indra
+## 📝 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
