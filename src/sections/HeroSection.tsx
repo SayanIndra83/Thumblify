@@ -57,9 +57,9 @@ export default function HeroSection() {
                 {session.data?.user ? (
                     <>
                 <button 
-                onClick={() => router.push('/sign-in')}
+                onClick={() => router.push(redirect)}
                 className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-7 h-11">
-                    Start Today
+                     Generate Now
                 </button>
                 <button className="flex items-center gap-2 border border-pink-900 hover:bg-pink-950/50 transition rounded-full px-6 h-11">
                     <VideoIcon strokeWidth={1} />
@@ -71,9 +71,9 @@ export default function HeroSection() {
                 : (
                     <>
                 <button 
-                onClick={() => router.push(redirect)}
+                onClick={() => router.push('/sign-in')}
                 className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-7 h-11">
-                    Generate Now
+                    Start Today
                 </button>
                 <button className="flex items-center gap-2 border border-pink-900 hover:bg-pink-950/50 transition rounded-full px-6 h-11">
                     <VideoIcon strokeWidth={1} />
